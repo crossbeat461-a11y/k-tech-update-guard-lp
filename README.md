@@ -37,6 +37,8 @@ python -m http.server 8080
 
 https://k-tech-update-guard-lp.vercel.app/google8a8913465dda62dd.html
 
+OG 画像: `og.png`（1200×630）
+
 ## バージョンを上げるとき
 
 `index.html` の `v0.1.2` を置換:

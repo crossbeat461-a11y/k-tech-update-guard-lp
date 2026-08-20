@@ -8,31 +8,65 @@
       gtag('js', new Date());
       gtag('config', 'G-1CYZZXRZ3P');
     </script>
+    <script>
+      document.addEventListener('click', function (e) {
+        var link = e.target.closest('a');
+        if (!link || !link.href) return;
+        var href = link.href;
+        var eventName = null;
+        var linkType = null;
+        if (href.indexOf('buymeacoffee.com') !== -1) {
+          eventName = 'click_bmc';
+          linkType = 'bmc';
+        } else if (href.indexOf('/releases') !== -1) {
+          eventName = 'click_release';
+          linkType = 'release';
+        } else if (href.indexOf('github.com') !== -1) {
+          eventName = 'click_github';
+          linkType = 'github';
+        } else if (href.indexOf('obsidian.md/plugins') !== -1) {
+          eventName = 'click_community';
+          linkType = 'community';
+        }
+        if (!eventName) return;
+        gtag('event', eventName, {
+          link_url: href,
+          link_text: (link.textContent || '').trim().slice(0, 100),
+          link_type: linkType
+        });
+      });
+    </script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K-Tech Update Guard v0.1.2 | 更新は確認して、選んでからインストールする</title>
-    <meta name="description" content="K-Tech Update Guard — コミュニティの更新を自分のタイミングで確認し、チェックした項目だけインストールします。GitHub へ直接確認。第三者サーバーなし。無料・MIT。">
+    <title>K-Tech Update Guard v0.1.2 | Obsidian のコミュニティ更新を確認して選んでインストール</title>
+    <meta name="description" content="K-Tech Update Guard は Obsidian 用ツール。コミュニティ更新を自分のタイミングで確認し、チェックした項目だけインストールします。GitHub へ直接確認。第三者サーバーなし。無料・MIT。">
     <meta name="robots" content="index, follow, max-image-preview:large">
     <meta name="author" content="K-Tech Studio">
+    <meta name="theme-color" content="#7c3aed">
     <link rel="canonical" href="https://k-tech-update-guard-lp.vercel.app/">
     <link rel="alternate" hreflang="ja" href="https://k-tech-update-guard-lp.vercel.app/">
     <link rel="alternate" hreflang="en" href="https://k-tech-update-guard-lp.vercel.app/">
     <link rel="alternate" hreflang="x-default" href="https://k-tech-update-guard-lp.vercel.app/">
+    <link rel="sitemap" type="application/xml" href="https://k-tech-update-guard-lp.vercel.app/sitemap.xml">
     <meta property="og:site_name" content="K-Tech Studio">
     <meta property="og:type" content="website">
     <meta property="og:title" content="K-Tech Update Guard v0.1.2 | Check, select, then install">
-    <meta property="og:description" content="Check community updates when you ask, then install only the ones you select. Talks to GitHub from your app. No third-party update server.">
+    <meta property="og:description" content="Obsidian tool: check community updates when you ask, then install only the ones you select. Talks to GitHub from your app. No third-party update server.">
     <meta property="og:url" content="https://k-tech-update-guard-lp.vercel.app/">
-    <meta property="og:image" content="https://k-tech-update-guard-lp.vercel.app/og.svg">
-    <meta property="og:image:alt" content="K-Tech Update Guard">
+    <meta property="og:image" content="https://k-tech-update-guard-lp.vercel.app/og.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="K-Tech Update Guard — Check. Select. Then install.">
     <meta property="og:locale" content="ja_JP">
     <meta property="og:locale:alternate" content="en_US">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="K-Tech Update Guard v0.1.2">
-    <meta name="twitter:description" content="Check community updates on demand, then install only what you select. Free &amp; MIT.">
-    <meta name="twitter:image" content="https://k-tech-update-guard-lp.vercel.app/og.svg">
-    <meta name="twitter:image:alt" content="K-Tech Update Guard">
+    <meta name="twitter:site" content="@K_Tech_Dev">
+    <meta name="twitter:title" content="K-Tech Update Guard v0.1.2 | Check, select, then install">
+    <meta name="twitter:description" content="Check Obsidian community updates on demand, then install only what you select. Free &amp; MIT.">
+    <meta name="twitter:image" content="https://k-tech-update-guard-lp.vercel.app/og.png">
+    <meta name="twitter:image:alt" content="K-Tech Update Guard — Check. Select. Then install.">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -57,13 +91,59 @@
           "@id": "https://k-tech-update-guard-lp.vercel.app/#app",
           "name": "K-Tech Update Guard",
           "url": "https://k-tech-update-guard-lp.vercel.app/",
-          "image": "https://k-tech-update-guard-lp.vercel.app/og.svg",
-          "description": "Check community updates on demand, then install only the ones you select.",
+          "image": "https://k-tech-update-guard-lp.vercel.app/og.png",
+          "screenshot": "https://k-tech-update-guard-lp.vercel.app/og.png",
+          "description": "Obsidian tool that checks community updates on demand, then installs only the ones you select. Talks to GitHub from your app; no third-party update server.",
           "applicationCategory": "UtilitiesApplication",
-          "operatingSystem": "Windows, macOS, Linux, iOS, Android",
+          "operatingSystem": "Obsidian",
           "softwareVersion": "0.1.2",
-          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
+          "datePublished": "2026-08-20",
+          "dateModified": "2026-08-21",
+          "isAccessibleForFree": true,
+          "license": "https://github.com/crossbeat461-a11y/k-tech-update-guard/blob/main/LICENSE",
+          "downloadUrl": "https://github.com/crossbeat461-a11y/k-tech-update-guard/releases/latest",
+          "installUrl": "https://k-tech-update-guard-lp.vercel.app/#install",
+          "keywords": "Obsidian, community plugins, updates, GitHub Releases, Lazy Loader",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY", "availability": "https://schema.org/InStock" },
           "author": { "@id": "https://k-tech-lab.vercel.app/#organization" }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://k-tech-update-guard-lp.vercel.app/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "K-Tech Update Guard は何をするツールですか？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Obsidian に入れているコミュニティ項目の更新を、自分のタイミングで確認し、チェックしたものだけインストールします。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "導入一覧は作者のサーバーに送られますか？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "送りません。確認はあなたのアプリから GitHub と公式のコミュニティ一覧へ直接行きます。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "GitHub トークンは必要ですか？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "通常は不要です。未認証は約60回/時です。回数制限に当たったときだけ、設定に PAT を足します。トークンはローカル保存のみです。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "どうやってインストールしますか？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "GitHub Releases から main.js、manifest.json、styles.css をダウンロードし、.obsidian/plugins/k-tech-update-guard/ に置いて有効化します。"
+              }
+            }
+          ]
         }
       ]
     }
