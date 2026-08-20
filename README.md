@@ -18,18 +18,12 @@ python -m http.server 8080
 
 ブラウザで http://localhost:8080 を開きます。
 
-## 公開（確認後）
+## Live URLs
 
-push と Vercel 公開は、内容を確認してから行います。
-
-想定 URL:
-
-| 先 | URL |
-|----|-----|
-| GitHub | `https://github.com/crossbeat461-a11y/k-tech-update-guard-lp`（未作成なら新規） |
-| Vercel | `https://k-tech-update-guard-lp.vercel.app/` |
-
-Vercel: Import Git → Framework Preset **Other**（static）→ Deploy。
+| Service | URL |
+|---------|-----|
+| **GitHub** | https://github.com/crossbeat461-a11y/k-tech-update-guard-lp |
+| **Vercel** | https://k-tech-update-guard-lp.vercel.app/ |
 
 ## バージョンを上げるとき
 
