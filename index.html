@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-Tech Update Guard v0.1.2 | 更新は確認して、選んでからインストールする</title>
+    <meta name="description" content="K-Tech Update Guard — コミュニティの更新を自分のタイミングで確認し、チェックした項目だけインストールします。GitHub へ直接確認。第三者サーバーなし。無料・MIT。">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="author" content="K-Tech Studio">
+    <link rel="canonical" href="https://k-tech-update-guard-lp.vercel.app/">
+    <link rel="alternate" hreflang="ja" href="https://k-tech-update-guard-lp.vercel.app/">
+    <link rel="alternate" hreflang="en" href="https://k-tech-update-guard-lp.vercel.app/">
+    <link rel="alternate" hreflang="x-default" href="https://k-tech-update-guard-lp.vercel.app/">
+    <meta property="og:site_name" content="K-Tech Studio">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="K-Tech Update Guard v0.1.2 | Check, select, then install">
+    <meta property="og:description" content="Check community updates when you ask, then install only the ones you select. Talks to GitHub from your app. No third-party update server.">
+    <meta property="og:url" content="https://k-tech-update-guard-lp.vercel.app/">
+    <meta property="og:image" content="https://k-tech-update-guard-lp.vercel.app/og.svg">
+    <meta property="og:image:alt" content="K-Tech Update Guard">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="K-Tech Update Guard v0.1.2">
+    <meta name="twitter:description" content="Check community updates on demand, then install only what you select. Free &amp; MIT.">
+    <meta name="twitter:image" content="https://k-tech-update-guard-lp.vercel.app/og.svg">
+    <meta name="twitter:image:alt" content="K-Tech Update Guard">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://k-tech-lab.vercel.app/#organization",
+          "name": "K-Tech Studio",
+          "url": "https://k-tech-lab.vercel.app/",
+          "sameAs": ["https://github.com/crossbeat461-a11y", "https://x.com/K_Tech_Dev", "https://note.com/ktech_dev"]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://k-tech-update-guard-lp.vercel.app/#website",
+          "url": "https://k-tech-update-guard-lp.vercel.app/",
+          "name": "K-Tech Update Guard",
+          "inLanguage": "ja",
+          "publisher": { "@id": "https://k-tech-lab.vercel.app/#organization" }
+        },
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://k-tech-update-guard-lp.vercel.app/#app",
+          "name": "K-Tech Update Guard",
+          "url": "https://k-tech-update-guard-lp.vercel.app/",
+          "image": "https://k-tech-update-guard-lp.vercel.app/og.svg",
+          "description": "Check community updates on demand, then install only the ones you select.",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "Windows, macOS, Linux, iOS, Android",
+          "softwareVersion": "0.1.2",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
+          "author": { "@id": "https://k-tech-lab.vercel.app/#organization" }
+        }
+      ]
+    }
+    </script>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%237c3aed'/><path d='M50 16 L74 28 V56 C74 72 62 84 50 90 C38 84 26 72 26 56 V28 Z' fill='%23ede9fe'/><path d='M40 52 L47 59 L62 40' fill='none' stroke='%235b21b6' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --obs-purple: #7c3aed;
+            --obs-purple-light: #a78bfa;
+            --obs-purple-dark: #5b21b6;
+            --guard: #10b981;
+            --obs-bg: #1e1e1e;
+            --obs-bg-secondary: #262626;
+            --obs-bg-tertiary: #2d2d2d;
+            --obs-border: #3d3d3d;
+            --obs-text: #dcddde;
+            --obs-text-muted: #999;
+            --page-bg: #131018;
+            --page-bg-soft: #1a1525;
+            --card: #ffffff;
+            --text: #1a1a2e;
+            --text-muted: #64748b;
+            --bmc-yellow: #ffdd00;
+            --shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: "Inter", "Noto Sans JP", "Hiragino Sans", "BIZ UDPGothic", sans-serif;
+            background: var(--page-bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .site-mark {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            z-index: 110;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #f4f0ff;
+            font-weight: 700;
+            font-size: 0.82rem;
+            letter-spacing: 0.01em;
+        }
+        .site-mark-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 28px;
+            padding: 0 7px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            font-size: 0.72rem;
+            letter-spacing: -0.04em;
+        }
+        .site-mark:hover { opacity: 0.85; }
+        @media (max-width: 640px) {
+            .site-mark-name { display: none; }
+        }
+
+        .lang-switch {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 100;
+            display: flex;
+            gap: 4px;
+            background: rgba(30, 30, 30, 0.92);
+            padding: 4px;
+            border-radius: 999px;
+            border: 1px solid var(--obs-border);
+            backdrop-filter: blur(8px);
+        }
+
+        .lang-btn {
+            border: none;
+            background: none;
+            color: var(--obs-text-muted);
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            cursor: pointer;
+        }
+
+        .lang-btn.active {
+            background: var(--obs-purple);
+            color: #fff;
+        }
+
+        .lang-en { display: none; }
+        html[lang="en"] .lang-ja { display: none; }
+        html[lang="en"] .lang-en { display: block; }
+        html[lang="en"] span.lang-en { display: inline; }
+        html[lang="ja"] span.lang-en { display: none; }
+        html[lang="en"] span.lang-ja { display: none; }
+        span.lang-ja, span.lang-en { display: inline; }
+
+        .hero {
+            padding: 88px 0 64px;
+            background:
+                radial-gradient(ellipse 80% 60% at 50% -10%, rgba(124, 58, 237, 0.45), transparent),
+                linear-gradient(180deg, var(--page-bg-soft) 0%, var(--page-bg) 100%);
+            color: #fff;
+            text-align: center;
+        }
+
+        .plugin-badge-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+        }
+
+        .badge-obsidian {
+            background: rgba(124, 58, 237, 0.25);
+            border: 1px solid rgba(167, 139, 250, 0.45);
+            color: #e9d5ff;
+        }
+
+        .badge-version {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #d1d5db;
+        }
+
+        .badge-guard {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(52, 211, 153, 0.35);
+            color: #a7f3d0;
+        }
+
+        .badge-bmc {
+            background: rgba(255, 221, 0, 0.14);
+            border: 1px solid rgba(255, 221, 0, 0.4);
+            color: #fde68a;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.25rem);
+            margin: 0 0 16px;
+            line-height: 1.25;
+            letter-spacing: -0.03em;
+        }
+
+        .hero h1 .purple { color: var(--obs-purple-light); }
+
+        .hero .lead {
+            max-width: 680px;
+            margin: 0 auto 32px;
+            font-size: 1.1rem;
+            color: #c4b5fd;
+            opacity: 0.95;
+        }
+
+        .hero-cta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--obs-purple) 0%, var(--obs-purple-dark) 100%);
+            color: #fff;
+            box-shadow: 0 8px 28px rgba(124, 58, 237, 0.45);
+        }
+
+        .btn-primary:hover { transform: translateY(-2px); }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.06);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--obs-purple-light);
+            color: var(--obs-purple-light);
+        }
+
+        .btn-coffee {
+            background: var(--bmc-yellow);
+            color: #111;
+        }
+
+        .btn-coffee:hover { transform: translateY(-2px); }
+
+        .obsidian-window {
+            margin: 48px auto 0;
+            max-width: 920px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--obs-border);
+            text-align: left;
+        }
+
+        .obs-titlebar {
+            background: #2b2b2b;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid var(--obs-border);
+        }
+
+        .obs-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .obs-dot.red { background: #ff5f57; }
+        .obs-dot.yellow { background: #febc2e; }
+        .obs-dot.green { background: #28c840; }
+
+        .obs-titlebar span {
+            flex: 1;
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--obs-text-muted);
+        }
+
+        .obs-body {
+            display: grid;
+            grid-template-columns: 56px 1fr;
+            min-height: 340px;
+            background: var(--obs-bg);
+        }
+
+        .obs-ribbon {
+            background: #1a1a1a;
+            border-right: 1px solid var(--obs-border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 12px 0;
+            gap: 10px;
+        }
+
+        .ribbon-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: rgba(124, 58, 237, 0.2);
+            color: #c4b5fd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+        }
+
+        .ribbon-icon.active {
+            background: rgba(16, 185, 129, 0.22);
+            color: #a7f3d0;
+            box-shadow: 0 0 0 1px rgba(52, 211, 153, 0.4);
+        }
+
+        .obs-main {
+            position: relative;
+            padding: 28px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-card {
+            width: min(100%, 420px);
+            background: var(--obs-bg-secondary);
+            border: 1px solid var(--obs-border);
+            border-radius: 12px;
+            padding: 18px 18px 14px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+        }
+
+        .modal-card h3 {
+            margin: 0 0 6px;
+            color: #e9d5ff;
+            font-size: 1.02rem;
+        }
+
+        .modal-card .modal-lead {
+            margin: 0 0 14px;
+            color: var(--obs-text-muted);
+            font-size: 0.78rem;
+        }
+
+        .update-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 10px;
+            border-radius: 8px;
+            background: var(--obs-bg-tertiary);
+            margin-bottom: 8px;
+            color: var(--obs-text);
+            font-size: 0.84rem;
+        }
+
+        .update-row input { accent-color: var(--obs-purple); }
+
+        .update-row .ver {
+            margin-left: auto;
+            color: #a7f3d0;
+            font-weight: 700;
+            font-size: 0.75rem;
+            white-space: nowrap;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .modal-btn {
+            border: none;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: default;
+        }
+
+        .modal-btn.ghost {
+            background: transparent;
+            color: var(--obs-text-muted);
+        }
+
+        .modal-btn.cta {
+            background: var(--obs-purple);
+            color: #fff;
+        }
+
+        .status-chip {
+            position: absolute;
+            right: 16px;
+            bottom: 14px;
+            font-size: 0.72rem;
+            color: #a7f3d0;
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(52, 211, 153, 0.3);
+            border-radius: 999px;
+            padding: 4px 10px;
+        }
+
+        .section-light {
+            padding: 72px 0;
+            background: #faf8ff;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            color: var(--obs-purple-dark);
+            margin: 0 0 12px;
+        }
+
+        .section-sub {
+            text-align: center;
+            color: var(--text-muted);
+            max-width: 640px;
+            margin: 0 auto 40px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid #ede9fe;
+            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.08);
+        }
+
+        .feature-card .icon { font-size: 1.75rem; margin-bottom: 10px; }
+
+        .feature-card h3 {
+            margin: 0 0 8px;
+            font-size: 1.05rem;
+            color: var(--obs-purple-dark);
+        }
+
+        .feature-card p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .flow {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .flow-step {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 20px 16px;
+            text-align: center;
+            border: 1px solid #ede9fe;
+        }
+
+        .flow-num {
+            display: inline-flex;
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--obs-purple), var(--obs-purple-dark));
+            color: #fff;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .flow-step h3 {
+            margin: 0 0 6px;
+            font-size: 0.98rem;
+            color: var(--text);
+        }
+
+        .flow-step p {
+            margin: 0;
+            font-size: 0.84rem;
+            color: var(--text-muted);
+        }
+
+        .scope-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 820px;
+            margin: 0 auto;
+        }
+
+        .scope-card {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid #ede9fe;
+        }
+
+        .scope-card.fix { border-top: 4px solid #10b981; }
+        .scope-card.nofix { border-top: 4px solid #f59e0b; }
+
+        .scope-card h3 { margin: 0 0 12px; font-size: 1.05rem; }
+        .scope-card.fix h3 { color: #047857; }
+        .scope-card.nofix h3 { color: #b45309; }
+
+        .scope-card ul {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .scope-card li { margin-bottom: 6px; }
+
+        .settings-table-wrap {
+            max-width: 760px;
+            margin: 0 auto;
+            overflow-x: auto;
+        }
+
+        table.settings {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--card);
+            border-radius: 12px;
+            overflow: hidden;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.08);
+        }
+
+        table.settings th {
+            background: var(--obs-purple-dark);
+            color: #fff;
+            text-align: left;
+            padding: 12px 16px;
+            font-size: 0.85rem;
+        }
+
+        table.settings td {
+            padding: 11px 16px;
+            border-bottom: 1px solid #f1edfb;
+            color: var(--text-muted);
+        }
+
+        table.settings td:first-child {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        table.settings code {
+            background: #f3e8ff;
+            color: var(--obs-purple-dark);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+
+        .steps {
+            display: grid;
+            gap: 16px;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .step {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            background: var(--card);
+            padding: 20px 22px;
+            border-radius: 14px;
+            border: 1px solid #ede9fe;
+        }
+
+        .step-num {
+            flex-shrink: 0;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--obs-purple), var(--obs-purple-dark));
+            color: #fff;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+        }
+
+        .step h3 {
+            margin: 0 0 4px;
+            font-size: 1rem;
+            color: var(--text);
+        }
+
+        .step p {
+            margin: 0;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        .step code {
+            background: #f3e8ff;
+            color: var(--obs-purple-dark);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+
+        .note-box {
+            max-width: 680px;
+            margin: 24px auto 0;
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            color: #9a3412;
+            border-radius: 12px;
+            padding: 14px 16px;
+            font-size: 0.88rem;
+        }
+
+        .changelog {
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        .release {
+            display: flex;
+            gap: 16px;
+            padding: 18px 0;
+            border-bottom: 1px solid #ede9fe;
+        }
+
+        .release:last-child { border-bottom: none; }
+
+        .release-tag {
+            flex-shrink: 0;
+            align-self: flex-start;
+            background: #f3e8ff;
+            color: var(--obs-purple-dark);
+            font-weight: 800;
+            font-size: 0.82rem;
+            padding: 4px 12px;
+            border-radius: 999px;
+            white-space: nowrap;
+        }
+
+        .release-tag.latest {
+            background: linear-gradient(135deg, var(--obs-purple), var(--obs-purple-dark));
+            color: #fff;
+        }
+
+        .release-body h3 {
+            margin: 0 0 4px;
+            font-size: 0.98rem;
+            color: var(--text);
+        }
+
+        .release-body p {
+            margin: 0;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        .release-date {
+            font-size: 0.78rem;
+            color: #a78bfa;
+            font-weight: 600;
+        }
+
+        .coffee-section {
+            padding: 72px 0;
+            background: linear-gradient(180deg, #0f0d14 0%, var(--page-bg) 100%);
+            text-align: center;
+            color: #e5e7eb;
+        }
+
+        .coffee-section h2 {
+            font-size: clamp(1.4rem, 3vw, 1.9rem);
+            margin: 0 0 12px;
+            color: #fff;
+        }
+
+        .coffee-section p {
+            max-width: 560px;
+            margin: 0 auto 28px;
+            color: #94a3b8;
+            font-size: 0.95rem;
+        }
+
+        .bmc-img { height: 56px; width: auto; }
+
+        footer {
+            padding: 56px 0 80px;
+            text-align: center;
+            background: #0c0814;
+            border-top: 1px solid rgba(167, 139, 250, 0.14);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 14px 22px;
+            margin-bottom: 18px;
+        }
+
+        .footer-links a {
+            color: var(--obs-purple-light);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.88rem;
+        }
+
+        .footer-links a:hover { color: #c4b5fd; }
+
+        .footer-copy {
+            color: #b8b0c8;
+            font-size: 0.85rem;
+            margin: 0 0 16px;
+        }
+
+        .footer-meta {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .btn-inline-text {
+            background: none;
+            border: none;
+            color: #b8b0c8;
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        #policy-box {
+            display: none;
+            text-align: left;
+            background: var(--card);
+            color: var(--text);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 30px auto 0;
+            max-width: 800px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+        }
+
+        #policy-box h3 {
+            color: var(--obs-purple-dark);
+            border-bottom: 2px solid var(--obs-purple-light);
+            padding-bottom: 10px;
+            margin: 0 0 25px;
+        }
+
+        .policy-content h4 {
+            color: var(--obs-purple-dark);
+            margin: 20px 0 10px;
+            border-left: 4px solid var(--obs-purple-light);
+            padding-left: 10px;
+        }
+
+        .policy-content p {
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            color: var(--text-muted);
+        }
+
+        .policy-close {
+            background: var(--obs-purple);
+            color: #fff;
+            border: none;
+            padding: 12px 35px;
+            cursor: pointer;
+            border-radius: 25px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 720px) {
+            .flow { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 640px) {
+            .obs-body { grid-template-columns: 1fr; }
+            .obs-ribbon, .status-chip { display: none; }
+            .flow { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <a class="site-mark" href="https://k-tech-lab.vercel.app/" target="_blank" rel="noopener noreferrer">
+        <span class="site-mark-badge">{K}</span>
+        <span class="site-mark-name">K-Tech Studio</span>
+    </a>
+
+    <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" class="lang-btn active" data-lang="ja">日本語</button>
+        <button type="button" class="lang-btn" data-lang="en">English</button>
+    </div>
+
+    <header class="hero">
+        <div class="container">
+            <div class="plugin-badge-row">
+                <span class="badge badge-obsidian">K-Tech Studio</span>
+                <span class="badge badge-version" id="version-badge">v0.1.2</span>
+                <span class="badge badge-guard">
+                    <span class="lang-ja">GitHub へ直接確認</span>
+                    <span class="lang-en">Talks to GitHub directly</span>
+                </span>
+                <span class="badge badge-bmc">☕ Buy Me a Coffee</span>
+            </div>
+
+            <h1>
+                <span class="lang-ja">更新は、<span class="purple">確認して選んで</span>からインストールする</span>
+                <span class="lang-en">Updates: <span class="purple">check, select,</span> then install</span>
+            </h1>
+
+            <p class="lead lang-ja">K-Tech Update Guard は、インストールしているコミュニティ項目の更新を、自分のタイミングで確認するツールです。あれば件数が分かり、チェックしたものだけインストールします。確認はあなたのアプリから GitHub へ直接行きます。作者のサーバーには送りません。無料（MIT）。</p>
+            <p class="lead lang-en">K-Tech Update Guard checks installed community items when you ask. If anything is new, you see the count, tick what you want, and install only those. Your app talks to GitHub directly — no K-Tech update server. Free &amp; MIT.</p>
+
+            <div class="hero-cta">
+                <a href="https://github.com/crossbeat461-a11y/k-tech-update-guard/releases/latest" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                    <span class="lang-ja">GitHub Releases からインストールする</span>
+                    <span class="lang-en">Get it from GitHub Releases</span>
+                </a>
+                <a href="https://github.com/crossbeat461-a11y/k-tech-update-guard" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">GitHub</a>
+                <a href="https://buymeacoffee.com/k_tech_studio" target="_blank" rel="noopener noreferrer" class="btn btn-coffee">☕ Buy Me a Coffee</a>
+            </div>
+
+            <div class="obsidian-window" aria-hidden="true">
+                <div class="obs-titlebar">
+                    <span class="obs-dot red"></span>
+                    <span class="obs-dot yellow"></span>
+                    <span class="obs-dot green"></span>
+                    <span>Vault — K-Tech Update Guard</span>
+                </div>
+                <div class="obs-body">
+                    <aside class="obs-ribbon">
+                        <div class="ribbon-icon">⌘</div>
+                        <div class="ribbon-icon">⌘</div>
+                        <div class="ribbon-icon active">🛡</div>
+                    </aside>
+                    <div class="obs-main">
+                        <div class="modal-card">
+                            <h3>
+                                <span class="lang-ja">2 件の更新があります</span>
+                                <span class="lang-en">2 update(s) available</span>
+                            </h3>
+                            <p class="modal-lead">
+                                <span class="lang-ja">インストールするものにチェックを付けてから更新してください。</span>
+                                <span class="lang-en">Select what to install, then update.</span>
+                            </p>
+                            <label class="update-row">
+                                <input type="checkbox" checked disabled>
+                                <span>Heading Jump Fix</span>
+                                <span class="ver">0.3.0 → 1.0.0</span>
+                            </label>
+                            <label class="update-row">
+                                <input type="checkbox" disabled>
+                                <span>Dataview</span>
+                                <span class="ver">0.5.67 → 0.5.68</span>
+                            </label>
+                            <div class="modal-actions">
+                                <span class="modal-btn ghost">
+                                    <span class="lang-ja">すべて選択</span>
+                                    <span class="lang-en">Select all</span>
+                                </span>
+                                <span class="modal-btn cta">
+                                    <span class="lang-ja">選択した項目を更新</span>
+                                    <span class="lang-en">Update selected</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="status-chip">
+                            <span class="lang-ja">ステータスバー：確認</span>
+                            <span class="lang-en">Status bar: Check</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="section-light">
+        <div class="container">
+            <h2 class="section-title lang-ja">使い方は4ステップ</h2>
+            <h2 class="section-title lang-en">Four steps</h2>
+            <p class="section-sub lang-ja">裏で勝手に全部インストールしません。確認したあと、選んだものだけです。</p>
+            <p class="section-sub lang-en">Nothing is installed in the background. You check first, then choose.</p>
+
+            <div class="flow">
+                <article class="flow-step">
+                    <span class="flow-num">1</span>
+                    <h3 class="lang-ja">盾をクリック</h3>
+                    <h3 class="lang-en">Click the shield</h3>
+                    <p class="lang-ja">リボン・ステータスバー・コマンドのどれからでも「更新を確認」。</p>
+                    <p class="lang-en">Ribbon, status bar, or command: Check for updates.</p>
+                </article>
+                <article class="flow-step">
+                    <span class="flow-num">2</span>
+                    <h3 class="lang-ja">結果を見る</h3>
+                    <h3 class="lang-en">See the result</h3>
+                    <p class="lang-ja">なければ「今のところ更新はありません」。あれば件数が分かります。</p>
+                    <p class="lang-en">No updates, or a clear count of what is new.</p>
+                </article>
+                <article class="flow-step">
+                    <span class="flow-num">3</span>
+                    <h3 class="lang-ja">インストールするものを選ぶ</h3>
+                    <h3 class="lang-en">Pick what to install</h3>
+                    <p class="lang-ja">チェック、または「すべて選択」。選びたくないものは外したまま。</p>
+                    <p class="lang-en">Tick items, or Select all. Leave the rest unchecked.</p>
+                </article>
+                <article class="flow-step">
+                    <span class="flow-num">4</span>
+                    <h3 class="lang-ja">選んだものだけインストールする</h3>
+                    <h3 class="lang-en">Install only those</h3>
+                    <p class="lang-ja">GitHub Release の <code>main.js</code> / <code>manifest.json</code> / <code>styles.css</code> をインストールします。</p>
+                    <p class="lang-en">Installs GitHub Release files — the same artifacts the official updater uses.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-light" style="background: #fff;">
+        <div class="container">
+            <h2 class="section-title lang-ja">できること</h2>
+            <h2 class="section-title lang-en">Features</h2>
+            <p class="section-sub lang-ja">「全部まとめて自動更新」ではなく、「自分で見てからインストールする」ための道具です。</p>
+            <p class="section-sub lang-en">Not a silent auto-updater. A tool to review first, then install.</p>
+
+            <div class="feature-grid">
+                <article class="feature-card">
+                    <span class="icon">🛡</span>
+                    <h3 class="lang-ja">必要なときだけ確認</h3>
+                    <h3 class="lang-en">On-demand check</h3>
+                    <p class="lang-ja">起動時確認は初期オフ。ボタンを押したときだけ GitHub を見に行きます。</p>
+                    <p class="lang-en">Check on startup is off by default. GitHub is contacted only when you ask.</p>
+                </article>
+                <article class="feature-card">
+                    <span class="icon">☑️</span>
+                    <h3 class="lang-ja">選んでからインストールする</h3>
+                    <h3 class="lang-en">Select, then install</h3>
+                    <p class="lang-ja">件数・チェック・すべて選択。インストールしたくない更新はそのまま残せます。</p>
+                    <p class="lang-en">Count, checkboxes, Select all. Skip anything you are not ready for.</p>
+                </article>
+                <article class="feature-card">
+                    <span class="icon">🔗</span>
+                    <h3 class="lang-ja">第三者サーバーなし</h3>
+                    <h3 class="lang-en">No third-party server</h3>
+                    <p class="lang-ja">導入一覧を K-Tech には送りません。見る先は GitHub と公式のコミュニティ一覧だけです。</p>
+                    <p class="lang-en">Your installed list is not sent to K-Tech. Requests go to GitHub and the official community list only.</p>
+                </article>
+                <article class="feature-card">
+                    <span class="icon">🔁</span>
+                    <h3 class="lang-ja">自分自身の更新も安全</h3>
+                    <h3 class="lang-en">Safe self-update</h3>
+                    <p class="lang-ja">このツール自身を更新するときは無効化せずファイルを書いてから、アプリを再読み込みします。</p>
+                    <p class="lang-en">Updating this tool writes files without disabling the running instance, then reloads.</p>
+                </article>
+                <article class="feature-card">
+                    <span class="icon">⏳</span>
+                    <h3 class="lang-ja">Lazy Loader に配慮</h3>
+                    <h3 class="lang-en">Lazy Loader aware</h3>
+                    <p class="lang-ja">遅延読み込みを「無効」と間違えません。設定を読む方法が初期値です。</p>
+                    <p class="lang-en">Delayed items are not treated as disabled. Reading Lazy Loader settings is the default.</p>
+                </article>
+                <article class="feature-card">
+                    <span class="icon">🌍</span>
+                    <h3 class="lang-ja">10言語の画面</h3>
+                    <h3 class="lang-en">10 UI languages</h3>
+                    <p class="lang-ja">英語・日本語・簡体／繁体中国語・韓国語・スペイン語・ドイツ語・フランス語・ポルトガル語・ロシア語。</p>
+                    <p class="lang-en">English, Japanese, Simplified/Traditional Chinese, Korean, Spanish, German, French, Portuguese, Russian.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-light">
+        <div class="container">
+            <h2 class="section-title lang-ja">すること・しないこと</h2>
+            <h2 class="section-title lang-en">What it does — and does not</h2>
+            <p class="section-sub lang-ja">役割をはっきりさせた、小さくて正直なツールです。</p>
+            <p class="section-sub lang-en">A small, honest tool with a clearly defined job.</p>
+
+            <div class="scope-grid">
+                <div class="scope-card fix">
+                    <h3>
+                        <span class="lang-ja">✓ すること</span>
+                        <span class="lang-en">✓ Does</span>
+                    </h3>
+                    <ul class="lang-ja">
+                        <li>コミュニティ掲載項目の更新確認</li>
+                        <li>選んだ項目だけ GitHub Release からインストールする</li>
+                        <li>ベータ非表示・公開からの待機日数</li>
+                        <li>無効項目の除外（Lazy Loader の「無効」のみ）</li>
+                    </ul>
+                    <ul class="lang-en">
+                        <li>Check updates for community-listed items</li>
+                        <li>Install only selected GitHub Release files</li>
+                        <li>Hide betas, wait N days after a release</li>
+                        <li>Skip disabled items (Lazy Loader “Disabled” only)</li>
+                    </ul>
+                </div>
+                <div class="scope-card nofix">
+                    <h3>
+                        <span class="lang-ja">△ しないこと</span>
+                        <span class="lang-en">△ Does not</span>
+                    </h3>
+                    <ul class="lang-ja">
+                        <li>導入一覧を作者サーバーへ送る</li>
+                        <li>初期状態でのバックグラウンド自動更新</li>
+                        <li>コミュニティ未登録（手動コピー / BRAT のみ）の更新</li>
+                    </ul>
+                    <ul class="lang-en">
+                        <li>Send your installed list to the author</li>
+                        <li>Background auto-update unless you turn on startup check</li>
+                        <li>Sideloaded / BRAT-only items not in the community directory</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-light" style="background: #fff;">
+        <div class="container">
+            <h2 class="section-title lang-ja">設定</h2>
+            <h2 class="section-title lang-en">Settings</h2>
+            <p class="section-sub lang-ja">初期値のままで使えます。更新回数は通常では上限に達しませんが、もし GitHub の回数制限に当たったら、トークンだけ足してください。</p>
+            <p class="section-sub lang-en">Works out of the box. You usually will not hit GitHub’s request limit; add a token only if you do.</p>
+
+            <div class="settings-table-wrap">
+                <table class="settings">
+                    <thead>
+                        <tr>
+                            <th><span class="lang-ja">設定</span><span class="lang-en">Setting</span></th>
+                            <th><span class="lang-ja">初期値</span><span class="lang-en">Default</span></th>
+                            <th><span class="lang-ja">説明</span><span class="lang-en">Description</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="lang-ja">起動時に確認する</span><span class="lang-en">Check on startup</span></td>
+                            <td>OFF</td>
+                            <td><span class="lang-ja">オフなら、ボタンまたはコマンドのときだけ確認します</span><span class="lang-en">When off, GitHub is contacted only from the button or command</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="lang-ja">無効の項目は対象外</span><span class="lang-en">Ignore disabled items</span></td>
+                            <td>ON</td>
+                            <td><span class="lang-ja">Lazy Loader 利用時は、そちらの「無効」だけを無効とみなします</span><span class="lang-en">With Lazy Loader, only items it marks Disabled are skipped</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="lang-ja">ベータ版を出さない</span><span class="lang-en">Hide beta versions</span></td>
+                            <td>ON</td>
+                            <td><span class="lang-ja">ベータ扱いのリリースを一覧に出しません</span><span class="lang-en">Keeps beta releases out of the list</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="lang-ja">公開から何日待つか</span><span class="lang-en">Days to wait after a release</span></td>
+                            <td><code>0</code></td>
+                            <td><span class="lang-ja">0 なら、確認した時点の最新を出します</span><span class="lang-en">0 shows a release as soon as this check finds it</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="lang-ja">遅延読み込みの扱い</span><span class="lang-en">Delayed loading</span></td>
+                            <td><span class="lang-ja">設定を読む</span><span class="lang-en">Read Lazy Loader settings</span></td>
+                            <td><span class="lang-ja">遅延項目を無効と誤らないための方法です</span><span class="lang-en">Avoid treating delayed items as disabled</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="lang-ja">GitHub トークン（任意）</span><span class="lang-en">GitHub token (optional)</span></td>
+                            <td>—</td>
+                            <td><span class="lang-ja">未認証は約60回/時。PAT はローカル保存のみです</span><span class="lang-en">Unauthenticated checks are about 60 requests/hour. PAT stays local</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-light" id="install">
+        <div class="container">
+            <h2 class="section-title lang-ja">インストール方法</h2>
+            <h2 class="section-title lang-en">How to install</h2>
+            <p class="section-sub lang-ja">いまは GitHub Releases から手動でインストールします。コミュニティ掲載が通ったら、そちらの検索からもインストールできます。</p>
+            <p class="section-sub lang-en">Install from GitHub Releases for now. After community listing, you can also browse and install from there.</p>
+
+            <div class="steps">
+                <div class="step">
+                    <span class="step-num">1</span>
+                    <div>
+                        <h3 class="lang-ja">最新リリースを開く</h3>
+                        <h3 class="lang-en">Open the latest release</h3>
+                        <p class="lang-ja">GitHub の <strong>Releases</strong> から <code>main.js</code>、<code>manifest.json</code>、<code>styles.css</code> をダウンロードします。</p>
+                        <p class="lang-en">From GitHub <strong>Releases</strong>, download <code>main.js</code>, <code>manifest.json</code>, and <code>styles.css</code>.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-num">2</span>
+                    <div>
+                        <h3 class="lang-ja">フォルダに置く</h3>
+                        <h3 class="lang-en">Put them in a folder</h3>
+                        <p class="lang-ja">Vault の <code>.obsidian/plugins/k-tech-update-guard/</code> に3ファイルを置きます（フォルダがなければ作成）。</p>
+                        <p class="lang-en">Place the three files in <code>.obsidian/plugins/k-tech-update-guard/</code> (create the folder if needed).</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-num">3</span>
+                    <div>
+                        <h3 class="lang-ja">有効にして確認する</h3>
+                        <h3 class="lang-en">Enable, then check</h3>
+                        <p class="lang-ja">設定 → Community plugins で <strong>K-Tech Update Guard</strong> をオン。リボンの盾、またはコマンド「更新を確認」。</p>
+                        <p class="lang-en">Settings → Community plugins → enable <strong>K-Tech Update Guard</strong>. Click the shield, or run Check for updates.</p>
+                    </div>
+                </div>
+            </div>
+
+            <p class="note-box lang-ja">コミュニティ掲載後の検索名は <strong>K-Tech Update Guard</strong> です（名前に Plugin は入りません）。ID は <code>k-tech-update-guard</code>。</p>
+            <p class="note-box lang-en">After listing, search for <strong>K-Tech Update Guard</strong> (the name does not include “Plugin”). ID: <code>k-tech-update-guard</code>.</p>
+
+            <div style="text-align: center; margin-top: 36px;">
+                <a href="https://github.com/crossbeat461-a11y/k-tech-update-guard/releases/latest" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                    <span class="lang-ja">最新リリースを開く</span>
+                    <span class="lang-en">Open latest release</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-light" id="changelog" style="background: #fff;">
+        <div class="container">
+            <h2 class="section-title lang-ja">アップデート履歴</h2>
+            <h2 class="section-title lang-en">Release history</h2>
+            <p class="section-sub lang-ja">新しいバージョンは GitHub Releases とここに追記していきます。</p>
+            <p class="section-sub lang-en">New versions are published on GitHub Releases and added here.</p>
+
+            <div class="changelog">
+                <div class="release">
+                    <span class="release-tag latest">v0.1.2</span>
+                    <div class="release-body">
+                        <span class="release-date">2026.08.21</span>
+                        <h3>
+                            <span class="lang-ja">設定画面の審査対応</span>
+                            <span class="lang-en">Settings review fixes</span>
+                        </h3>
+                        <p class="lang-ja">設定の見出しを公式の書き方に合わせ、古いアプリ版でも設定が誤判定されないようにしました。</p>
+                        <p class="lang-en">Settings heading uses the official pattern, and settings reads are typed so older app versions are not flagged.</p>
+                    </div>
+                </div>
+                <div class="release">
+                    <span class="release-tag">v0.1.1</span>
+                    <div class="release-body">
+                        <span class="release-date">2026.08.21</span>
+                        <h3>
+                            <span class="lang-ja">名前変更と10言語、自己更新の安全化</span>
+                            <span class="lang-en">Rename, 10 locales, safer self-update</span>
+                        </h3>
+                        <p class="lang-ja">表示名を K-Tech Update Guard に。画面は10言語。自分自身の更新は無効化せず再読み込みします。</p>
+                        <p class="lang-en">Display name is K-Tech Update Guard. UI in 10 languages. Self-update no longer disables the running instance.</p>
+                    </div>
+                </div>
+                <div class="release">
+                    <span class="release-tag">v0.1.0</span>
+                    <div class="release-body">
+                        <span class="release-date">2026.08.20</span>
+                        <h3>
+                            <span class="lang-ja">初回公開</span>
+                            <span class="lang-en">Initial release</span>
+                        </h3>
+                        <p class="lang-ja">オンデマンド確認、更新なしダイアログ、選択インストール、Lazy Loader 対応、Buy Me a Coffee。</p>
+                        <p class="lang-en">On-demand check, no-updates dialog, select-and-install, Lazy Loader handling, Buy Me a Coffee.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="coffee-section">
+        <div class="container">
+            <h2>
+                <span class="lang-ja">☕ 開発を応援する</span>
+                <span class="lang-en">☕ Support development</span>
+            </h2>
+            <p class="lang-ja">K-Tech Update Guard は無料・オープンソースです。役に立ったら、コーヒー1杯分の応援が今後の更新の励みになります。案内はインストール時と、このツール自身の更新時に1回ずつ出ます（任意です）。</p>
+            <p class="lang-en">K-Tech Update Guard is free and open source. If it helps, a coffee keeps the updates coming. A thank-you dialog appears once on install and once after this tool updates (optional).</p>
+            <a href="https://buymeacoffee.com/k_tech_studio" target="_blank" rel="noopener noreferrer">
+                <img class="bmc-img" src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" loading="lazy" decoding="async">
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="https://github.com/crossbeat461-a11y/k-tech-update-guard/releases/latest" target="_blank" rel="noopener noreferrer">Releases</a>
+                <a href="https://github.com/crossbeat461-a11y/k-tech-update-guard" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="https://github.com/crossbeat461-a11y/k-tech-update-guard/issues" target="_blank" rel="noopener noreferrer">Issues</a>
+                <a href="https://obsidian.md/plugins?id=k-tech-update-guard" target="_blank" rel="noopener noreferrer">Community plugins</a>
+                <a href="https://buymeacoffee.com/k_tech_studio" target="_blank" rel="noopener noreferrer">☕ Buy Me a Coffee</a>
+                <a href="https://k-tech-lab.vercel.app/" target="_blank" rel="noopener noreferrer">K-Tech Studio</a>
+            </div>
+            <p class="footer-copy">K-Tech Update Guard v0.1.2 · MIT · &copy; 2026 K-Tech Studio. Stay curious.</p>
+            <div class="footer-meta">
+                <button type="button" onclick="togglePolicy()" class="btn-inline-text">About this site</button>
+            </div>
+
+            <div id="policy-box">
+                <h3>About this site</h3>
+                <p style="font-size: 0.85rem;">利用者の責任において使用してください。損害について一切の責任を負いません。</p>
+                <div class="policy-content">
+                    <h4>プライバシーポリシー</h4>
+                    <p>このランディングページは、現時点でアクセス解析（Google アナリティクス等）を入れていません。</p>
+                    <p>ツール本体は、更新確認のときにあなたのアプリから GitHub および公式のコミュニティ一覧へリクエストします。導入一覧を K-Tech のサーバーへは送りません。任意の GitHub トークンはプラグインのローカル設定にだけ保存されます。</p>
+
+                    <h4>免責事項</h4>
+                    <p>当サイトからリンクによって移動された先のサイトで提供される情報・サービスについて、一切の責任を負いません。</p>
+                    <p>掲載内容は正確な情報の提供に努めていますが、正確性や安全性を保証するものではありません。掲載内容によって生じた損害等の責任を負いかねますのでご了承ください。</p>
+
+                    <h4>お問い合わせ</h4>
+                    <p>不具合報告・機能要望は <a href="https://github.com/crossbeat461-a11y/k-tech-update-guard/issues" target="_blank" rel="noopener noreferrer">GitHub Issues</a>、または <a href="https://note.com/ktech_dev" target="_blank" rel="noopener noreferrer">note</a>・<a href="https://x.com/K_Tech_Dev" target="_blank" rel="noopener noreferrer">X</a> よりご連絡ください。</p>
+                </div>
+                <div style="text-align: center; margin-top: 40px;">
+                    <button type="button" onclick="togglePolicy()" class="policy-close">閉じる</button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.lang-btn').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                const lang = btn.dataset.lang;
+                document.documentElement.lang = lang;
+                document.querySelectorAll('.lang-btn').forEach((b) => {
+                    b.classList.toggle('active', b === btn);
+                });
+            });
+        });
+
+        function togglePolicy() {
+            const box = document.getElementById('policy-box');
+            const show = box.style.display !== 'block';
+            box.style.display = show ? 'block' : 'none';
+            if (show) box.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

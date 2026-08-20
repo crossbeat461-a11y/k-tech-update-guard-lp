@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://k-tech-update-guard-lp.vercel.app/sitemap.xml
