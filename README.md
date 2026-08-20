@@ -25,6 +25,18 @@ python -m http.server 8080
 | **GitHub** | https://github.com/crossbeat461-a11y/k-tech-update-guard-lp |
 | **Vercel** | https://k-tech-update-guard-lp.vercel.app/ |
 
+## Analytics / Search Console
+
+| 項目 | 状態 |
+|------|------|
+| Search Console 確認ファイル | `google8a8913465dda62dd.html`（他 LP と同一トークン） |
+| sitemap | https://k-tech-update-guard-lp.vercel.app/sitemap.xml |
+| GA4 測定 ID | **未発行**（専用ストリーム作成後に `index.html` へ挿入） |
+
+確認ファイルの本番 URL:
+
+https://k-tech-update-guard-lp.vercel.app/google8a8913465dda62dd.html
+
 ## バージョンを上げるとき
 
 `index.html` の `v0.1.2` を置換:
