@@ -31,7 +31,7 @@ python -m http.server 8080
 |------|------|
 | Search Console 確認ファイル | `google8a8913465dda62dd.html`（他 LP と同一トークン） |
 | sitemap | https://k-tech-update-guard-lp.vercel.app/sitemap.xml |
-| GA4 測定 ID | **未発行**（専用ストリーム作成後に `index.html` へ挿入） |
+| GA4 測定 ID | `G-1CYZZXRZ3P`（専用） |
 
 確認ファイルの本番 URL:
 
