@@ -1,6 +1,6 @@
 # K-Tech Update Guard — Landing Page
 
-**K-Tech Update Guard**（v0.1.3）の公式ランディングページです。
+**K-Tech Update Guard**（v0.2.0）の公式ランディングページです。
 
 - コミュニティの更新を、自分のタイミングで確認
 - チェックした項目だけインストールする
@@ -41,7 +41,7 @@ OG 画像: `og.png`（1200×630）
 
 ## バージョンを上げるとき
 
-`index.html` の `v0.1.3` を置換:
+`index.html` の `v0.2.0` を置換:
 
 - `<title>` と meta / JSON-LD
 - ヒーローの `#version-badge`
